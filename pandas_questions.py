@@ -22,16 +22,25 @@ def load_data():
     return referendum, regions, departments
 
 
-
 def merge_regions_and_departments(regions, departments):
     """Merge regions and departments in one DataFrame.
 
     The columns in the final DataFrame should be:
     ['code_reg', 'name_reg', 'code_dep', 'name_dep']
     """
-    reg = regions.rename(columns={"code": "code_reg", "name": "name_reg"})
+    reg = regions.rename(
+        columns={
+            "code": "code_reg",
+            "name": "name_reg",
+        }
+    )
+
     dep = departments.rename(
-        columns={"region_code": "code_reg", "code": "code_dep", "name": "name_dep"}
+        columns={
+            "region_code": "code_reg",
+            "code": "code_dep",
+            "name": "name_dep",
+        }
     )
 
     merged = dep.merge(
@@ -65,6 +74,7 @@ def merge_referendum_and_areas(referendum, regions_and_departments):
         how="left",
     )
     return merged.dropna()
+
 
 def compute_referendum_result_by_regions(referendum_and_areas):
     """Return a table with the absolute count for each region.
